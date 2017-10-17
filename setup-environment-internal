@@ -232,10 +232,10 @@ then
 fi
 
 # evaluate new checksum and regenerate the conf files
-sha512sum "${MANIFESTS}"/setup-environment-internal 2>&1 > conf/checksum
+sha512sum "${OEROOT}"/conf/setup-environment-internal 2>&1 > conf/checksum
 
-ln -sf "${MANIFESTS}"/conf/local.conf conf/local.conf
-ln -sf "${MANIFESTS}"/conf/bblayers.conf conf/bblayers.conf
+ln -sf "${OEROOT}"/conf/local.conf conf/local.conf
+ln -sf "${OEROOT}"/conf/bblayers.conf conf/bblayers.conf
 ln -sf "${MANIFESTS}"/README.md README.md
 
 ln -sf "${MANIFESTS}" "${OEROOT}"/layers/
