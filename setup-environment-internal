@@ -344,12 +344,9 @@ fi
 
 cat <<EOF
 
-Welcome to OpenEmbedded Reference Platform Build (OE RPB)
+Welcome to mbed Linux (MBL)
 
-For more information about OpenEmbedded see their website:
-    http://www.openembedded.org/
-
-Your build environemnt has been configured with:
+Your build environment has been configured with:
 
     MACHINE = ${MACHINE}
     SDKMACHINE = ${SDKMACHINE}
@@ -358,10 +355,6 @@ Your build environemnt has been configured with:
 You can now run 'bitbake <target>'
 
 Some of common targets are:
-    rpb-console-image
-    rpb-desktop-image
-    rpb-weston-image
-    core-image-base
-    core-image-minimal
+    mbl-console-image
 
 EOF
