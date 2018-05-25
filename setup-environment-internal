@@ -34,7 +34,8 @@ if [ "$(whoami)" = "root" ]; then
     return
 fi
 
-OEROOT=$(pwd)
+# Avoid symlinks as it can cause modules (such as lvm2) to fail to build
+OEROOT=$(pwd -P)
 cd "$OEROOT"
 if [ -n "$ZSH_VERSION" ]; then
     setopt sh_word_split
@@ -156,8 +157,8 @@ export PATH="${OEROOT}"/layers/openembedded-core/scripts:"${OEROOT}"/bitbake/bin
 #remove duplicate path entries
 export PATH=$(echo "$PATH" | awk -F: '{for (i=1;i<=NF;i++) { if ( !x[$i]++ ) printf("%s:",$i); }}' | sed 's/:$//')
 # Make sure Bitbake doesn't filter out the following variables from our
-# environment.
-export BB_ENV_EXTRAWHITE="MACHINE DISTRO TCLIBC TCMODE GIT_PROXY_COMMAND http_proxy ftp_proxy https_proxy all_proxy ALL_PROXY no_proxy SSH_AGENT_PID SSH_AUTH_SOCK BB_SRCREV_POLICY SDKMACHINE BB_NUMBER_THREADS"
+# environment. Including allowing for a shared download directory (DL_DIR)
+export BB_ENV_EXTRAWHITE="MACHINE DISTRO TCLIBC TCMODE GIT_PROXY_COMMAND http_proxy ftp_proxy https_proxy all_proxy ALL_PROXY no_proxy SSH_AGENT_PID SSH_AUTH_SOCK BB_SRCREV_POLICY SDKMACHINE BB_NUMBER_THREADS DL_DIR"
 
 # Helper command for building images for mixed 32bit/64bit
 # ARM builds. The command allow to specify a secondary MACHINE
@@ -344,7 +345,7 @@ fi
 
 cat <<EOF
 
-Welcome to mbed Linux (MBL)
+Welcome to Mbed Linux OS (MBL)
 
 Your build environment has been configured with:
 
@@ -356,5 +357,6 @@ You can now run 'bitbake <target>'
 
 Some of common targets are:
     mbl-console-image
+    mbl-console-image-test
 
 EOF
