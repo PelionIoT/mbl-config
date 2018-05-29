@@ -1,4 +1,4 @@
-Different files of meta-config are under different licenses (a mix of MIT & GPLv2).
+Different files of mbl-config are under different licenses (a mix of MIT & GPLv2).
 
 All configuration files are MIT licensed unless otherwise stated. Please see
 the [MIT license file][mit-license] for the MIT license.
