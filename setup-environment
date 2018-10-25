@@ -1,7 +1,14 @@
 #!/bin/sh
 # -*- mode: shell-script-mode; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
 #
-# Copyright (C) 2012-13 O.S. Systems Software LTDA.
+# Based on: setup-environment
+# In open-source project: https://github.com/96boards/oe-rpb-manifest
+# 
+# Original file: Copyright (C) 2012-13 O.S. Systems Software LTDA.
+# Modifications: Copyright (c) 2018 Arm Limited and Contributors. All rights reserved.
+#
+# SPDX-License-Identifier: GPL-2.0
+# 
 # Authored-by:  Otavio Salvador <otavio@ossystems.com.br>
 # Adopted to Angstrom:  Khem Raj <raj.khem@gmail.com>
 #
