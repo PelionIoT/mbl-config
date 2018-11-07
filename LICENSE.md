@@ -1,34 +1,21 @@
-This repository contains open-source software (OSS). All source files in this
-repository will contain OSS, copyright and [SPDX ID][spdx-id] information.
+This repository contains open-source software (OSS) and follows the
+[REUSE practices v2.0][reuse-practices] for stating license information.
  
-This document lists all the OSS used in this repository grouped by the
-[SPDX License List][spdx-licenses] full name and short identifier. Each group
-refers to the full license text in an accompanying file.
-- - - - 
-# License: MIT License (MIT)
+All source files in this repository will contain copyright and
+[SPDX ID][spdx-id] information, but no license text.
  
-Files created by Arm in this repository are provided under this license.
+The license texts for the OSS contained in this repository are kept
+at the top level and placed in individually named `LICENSE.SPDX-ID`
+files. No copyrights are contained in these files, instead refer to
+the individual source files.
 
-Files from the following open-source software have been used in this repository.
+The default license for new files in this repository is the [MIT License][mit-license].
 
-* Name: 96boards/oe-rpb-manifest
-   * URI: https://github.com/96boards/oe-rpb-manifest
-   * Copyright: Copyright (c) 2013 Khem Raj
-
-[MIT License][mit-license]
-
-# License: GNU General Public License v2.0 only (GPL-2.0)
-
-Files from the following open-source software have been used in this repository. 
-
-* Name: 96boards/oe-rpb-manifest
-   * URI: https://github.com/96boards/oe-rpb-manifest
-   * Copyright: Copyright (C) 2012-13 O.S. Systems Software LTDA.
-  
-[GPLv2 license][gplv2-license]
-
+Please refer to the [SPDX License List][spdx-licenses] for more
+information about each SPDX ID. 
+ 
+[reuse-practices]: https://reuse.software/practices/2.0
 [spdx-licenses]: https://spdx.org/licenses
 [spdx-id]: https://spdx.org/ids
-[gplv2-license]: LICENSE.GPLv2
 [mit-license]: LICENSE.MIT
 
