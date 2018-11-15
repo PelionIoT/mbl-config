@@ -1,11 +1,21 @@
-Different files of mbl-config are under different licenses (a mix of MIT & GPLv2).
+This repository contains open-source software (OSS) and follows the
+[REUSE practices v2.0][reuse-practices] for stating license information.
+ 
+All source files in this repository will contain copyright and
+[SPDX ID][spdx-id] information, but no license text.
+ 
+The license texts for the OSS contained in this repository are kept
+at the top level and placed in individually named `LICENSE.SPDX-ID`
+files. No copyrights are contained in these files, instead refer to
+the individual source files.
 
-All configuration files are MIT licensed unless otherwise stated. Please see
-the [MIT license file][mit-license] for the MIT license.
+The default license for new files in this repository is the [MIT License][mit-license].
 
-Set up script files are GPLv2 licensed as stated in each file. Please see the
-[GPLv2 license file][gplv2-license] for the GPLv2 license.
-
-[gplv2-license]: LICENSE.GPLv2
+Please refer to the [SPDX License List][spdx-licenses] for more
+information about each SPDX ID. 
+ 
+[reuse-practices]: https://reuse.software/practices/2.0
+[spdx-licenses]: https://spdx.org/licenses
+[spdx-id]: https://spdx.org/ids
 [mit-license]: LICENSE.MIT
 
