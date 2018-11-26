@@ -26,6 +26,7 @@
     - What is the SHA of mbl-manifest or any other relevant repository? (git log -n1 --oneline)?
     - Can you provide a pinned manifest?
     - What are the steps to reproduce the issue?
+    - Attach any log which may help with the issue resolution
 -->
 
 
