@@ -24,7 +24,8 @@
     - What machine does this relate to?
     - What tools (name + version) are you using?
     - What platform are you running on?
-    - What is the SHA of mbl-manifest (git log -n1 --oneline)? Can you provide a pinned manifest?
+    - What is the SHA of mbl-manifest or any other relevant repository? (git log -n1 --oneline)?
+    - Can you provide a pinned manifest?
     - What are the steps to reproduce the issue?
 -->
 
