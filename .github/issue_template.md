@@ -18,7 +18,6 @@
 
 <!--
     Required
-    Please refer to MBL guidelines: https://github.com/ARMmbed/meta-mbl/blob/master/docs/pr-guidelines.md
     Add detailed description of what you are reporting.
     Things to consider sharing:
     - What machine does this relate to?
