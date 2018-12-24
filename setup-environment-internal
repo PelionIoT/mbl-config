@@ -331,7 +331,7 @@ Your build environment has been configured with:
 You can now run 'bitbake <target>'
 
 Some of common targets are:
-    mbl-console-image
-    mbl-console-image-test
+    mbl-image-production
+    mbl-image-development
 
 EOF
