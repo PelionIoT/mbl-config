@@ -70,7 +70,7 @@ mbl_eula_handle () {
         # EULA. If we start using recipes covered by a EULA without updating this
         # code then those recipes will fail to build due to the missing
         # ACCEPT_FSL_EULA variable.
-        imx8mmevk)
+    imx8mmevk)
         EULA_PATH="../layers/meta-freescale/EULA"
         EULA_ACCEPT_BB_VAR="ACCEPT_FSL_EULA"
         EULA_ACCEPT_BB_VALUE="1"
