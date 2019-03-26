@@ -351,7 +351,7 @@ then
     then
         echo "ERROR: EULA Has not been read and accepted."
         return 1
-        fi
+    fi
     sha512sum --quiet -c conf/checksum > /dev/null 2>&1
     if [ $? -eq 0 ]
     then
