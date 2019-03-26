@@ -59,6 +59,8 @@
 # FIXME: there is a potential issue if the same $MACHINE is set in more than
 # one layer.. but we should assert that earlier
 mbl_eula_handle () {
+    EULA_ACCEPTED=1
+
     NON_MBL_MACHINE="${MACHINE%-mbl}"
 
     # remove '-' since we are constructing an environment variable name here
@@ -97,6 +99,7 @@ mbl_eula_handle () {
                 touch "${EULA_ACCEPT_ENV_VAR}"
             else
                 # so we need to ask user if he/she accepts the EULA:
+                INVALID_COUNT=0
                 cat <<EOF
 
 The BSP for $NON_MBL_MACHINE depends on packages and firmware which are covered by an End
@@ -116,9 +119,17 @@ EOF
                             ;;
                         n|N)
                             READ_EULA=0
+                            EULA_ACCEPTED=0
                             ;;
                         *)
-                            REPLY=
+                            INVALID_COUNT=$((INVALID_COUNT+1))
+                            if [ $INVALID_COUNT -eq 3 ]; then
+                                REPLY=q
+                                READ_EULA=0
+                                EULA_ACCEPTED=0
+                            else
+                                REPLY=
+                            fi
                             ;;
                     esac
                 done
@@ -141,6 +152,7 @@ EOF
                             n|N)
                                 echo "EULA has not been accepted."
                                 sed -i "/${EULA_ACCEPT_BB_VAR}/d" conf/auto.conf
+                                EULA_ACCEPTED=0
                                 ;;
                             *)
                                 REPLY=
@@ -151,6 +163,7 @@ EOF
             fi
         fi
     fi
+    return $EULA_ACCEPTED
 }
 
 RPBcleanup() {
@@ -361,6 +374,12 @@ INHERIT += "rm_work"
 EOF
 
 mbl_eula_handle
+if [ $? -eq 0 ]
+then
+    echo "ERROR: EULA Has not been read and accepted."
+    return 1
+fi
+
 
 if [ ! -e conf/site.conf ]; then
     cat > conf/site.conf <<_EOF
