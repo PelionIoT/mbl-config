@@ -59,7 +59,7 @@
 # FIXME: there is a potential issue if the same $MACHINE is set in more than
 # one layer.. but we should assert that earlier
 mbl_eula_handle () {
-    EULA_ACCEPTED=1
+    EULA_REJECTED=0
 
     NON_MBL_MACHINE="${MACHINE%-mbl}"
 
@@ -119,14 +119,14 @@ EOF
                             ;;
                         n|N)
                             READ_EULA=0
-                            EULA_ACCEPTED=0
+                            EULA_REJECTED=1
                             ;;
                         *)
                             INVALID_COUNT=$((INVALID_COUNT+1))
                             if [ $INVALID_COUNT -eq 3 ]; then
                                 REPLY=q
                                 READ_EULA=0
-                                EULA_ACCEPTED=0
+                                EULA_REJECTED=1
                             else
                                 REPLY=
                             fi
@@ -153,7 +153,7 @@ EOF
                             n|N)
                                 echo "EULA has not been accepted."
                                 sed -i "/${EULA_ACCEPT_BB_VAR}/d" conf/auto.conf
-                                EULA_ACCEPTED=0
+                                EULA_REJECTED=1
                                 ;;
                             *)
                                 REPLY=
@@ -164,7 +164,7 @@ EOF
             fi
         fi
     fi
-    return $EULA_ACCEPTED
+    return $EULA_REJECTED
 }
 
 RPBcleanup() {
@@ -347,7 +347,7 @@ then
     # the first build we still need to check if the EULA needs
     # to be accepted
     mbl_eula_handle
-    if [ $? -eq 0 ]
+    if [ $? -eq 1 ]
     then
         echo "ERROR: EULA Has not been read and accepted."
             return 1
@@ -380,7 +380,7 @@ INHERIT += "rm_work"
 EOF
 
 mbl_eula_handle
-if [ $? -eq 0 ]
+if [ $? -eq 1 ]
 then
     echo "ERROR: EULA Has not been read and accepted."
     return 1
