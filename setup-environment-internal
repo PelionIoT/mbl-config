@@ -99,7 +99,7 @@ mbl_eula_handle () {
                 touch "${EULA_ACCEPT_ENV_VAR}"
             else
                 # so we need to ask user if he/she accepts the EULA:
-                INVALID_COUNT=0
+                REJECT_COUNT=0
                 cat <<EOF
 
 The BSP for $NON_MBL_MACHINE depends on packages and firmware which are covered by an End
@@ -122,8 +122,8 @@ EOF
                             EULA_REJECTED=1
                             ;;
                         *)
-                            INVALID_COUNT=$((INVALID_COUNT+1))
-                            if [ $INVALID_COUNT -eq 3 ]; then
+                            REJECT_COUNT=$((REJECT_COUNT+1))
+                            if [ $REJECT_COUNT -eq 3 ]; then
                                 REPLY=q
                                 READ_EULA=0
                                 EULA_REJECTED=1
