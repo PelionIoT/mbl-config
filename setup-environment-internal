@@ -134,6 +134,7 @@ EOF
                     esac
                 done
 
+
                 if [ "$READ_EULA" = 1 ]; then
                     more -d "${EULA_PATH}"
                     echo
@@ -346,6 +347,11 @@ then
     # the first build we still need to check if the EULA needs
     # to be accepted
     mbl_eula_handle
+    if [ $? -eq 0 ]
+    then
+        echo "ERROR: EULA Has not been read and accepted."
+            return 1
+        fi
     sha512sum --quiet -c conf/checksum > /dev/null 2>&1
     if [ $? -eq 0 ]
     then
