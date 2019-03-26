@@ -59,6 +59,8 @@
 # FIXME: there is a potential issue if the same $MACHINE is set in more than
 # one layer.. but we should assert that earlier
 mbl_eula_handle () {
+    EULA_REJECTED=0
+
     NON_MBL_MACHINE="${MACHINE%-mbl}"
 
     # remove '-' since we are constructing an environment variable name here
@@ -97,6 +99,7 @@ mbl_eula_handle () {
                 touch "${EULA_ACCEPT_ENV_VAR}"
             else
                 # so we need to ask user if he/she accepts the EULA:
+                REJECT_COUNT=0
                 cat <<EOF
 
 The BSP for $NON_MBL_MACHINE depends on packages and firmware which are covered by an End
@@ -116,12 +119,21 @@ EOF
                             ;;
                         n|N)
                             READ_EULA=0
+                            EULA_REJECTED=1
                             ;;
                         *)
-                            REPLY=
+                            REJECT_COUNT=$((REJECT_COUNT+1))
+                            if [ $REJECT_COUNT -eq 3 ]; then
+                                REPLY=q
+                                READ_EULA=0
+                                EULA_REJECTED=1
+                            else
+                                REPLY=
+                            fi
                             ;;
                     esac
                 done
+
 
                 if [ "$READ_EULA" = 1 ]; then
                     more -d "${EULA_PATH}"
@@ -141,6 +153,7 @@ EOF
                             n|N)
                                 echo "EULA has not been accepted."
                                 sed -i "/${EULA_ACCEPT_BB_VAR}/d" conf/auto.conf
+                                EULA_REJECTED=1
                                 ;;
                             *)
                                 REPLY=
@@ -151,6 +164,7 @@ EOF
             fi
         fi
     fi
+    return $EULA_REJECTED
 }
 
 RPBcleanup() {
@@ -333,6 +347,11 @@ then
     # the first build we still need to check if the EULA needs
     # to be accepted
     mbl_eula_handle
+    if [ $? -eq 1 ]
+    then
+        echo "ERROR: EULA Has not been read and accepted."
+        return 1
+    fi
     sha512sum --quiet -c conf/checksum > /dev/null 2>&1
     if [ $? -eq 0 ]
     then
@@ -361,6 +380,12 @@ INHERIT += "rm_work"
 EOF
 
 mbl_eula_handle
+if [ $? -eq 1 ]
+then
+    echo "ERROR: EULA Has not been read and accepted."
+    return 1
+fi
+
 
 if [ ! -e conf/site.conf ]; then
     cat > conf/site.conf <<_EOF
