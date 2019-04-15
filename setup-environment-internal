@@ -77,6 +77,11 @@ mbl_eula_handle () {
         EULA_ACCEPT_BB_VAR="ACCEPT_FSL_EULA"
         EULA_ACCEPT_BB_VALUE="1"
         ;;
+    imx7d-pico)
+        EULA_PATH="../layers/meta-fsl-bsp-release/imx/EULA.txt"
+        EULA_ACCEPT_BB_VAR="ACCEPT_FSL_EULA"
+        EULA_ACCEPT_BB_VALUE="1"
+        ;;
     *)
         EULA_PATH=$(find ../layers -path "*/conf/eula/${NON_MBL_MACHINE}" -print | grep -v scripts | grep -v openembedded-core | grep -v meta-linaro || true)
         EULA_ACCEPT_BB_VAR="ACCEPT_EULA_${NON_MBL_MACHINE}"
