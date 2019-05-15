@@ -269,7 +269,6 @@ BUILDDIR=$OEROOT/$BUILDDIR
 
 # Clean up PATH, because if it includes tokens to current directories somehow,
 # wrong binaries can be used instead of the expected ones during task execution
-export MACHINE=${MACHINE}
 export PATH=$(echo "${PATH}" | sed 's/\(:.\|:\)*:/:/g;s/^.\?://;s/:.\?$//')
 export PATH="${OEROOT}"/layers/openembedded-core/scripts:"${OEROOT}"/bitbake/bin:"${OEROOT}"/.repo/repo:"${PATH}"
 #remove duplicate path entries
@@ -369,8 +368,7 @@ ln -sf "${OEROOT}"/conf/local.conf conf/local.conf
 # Target specific BSP layers are specified in a bblayers_${MACHINE}.conf
 # file. This environment setup script the replaces ##MACHINE## tag in
 # bblayers.conf with that specified by MACHINE.
-rm -f conf/bblayers.conf
-rm -f conf/bblayers_*.conf
+rm -f conf/bblayers*.conf
 sed -e "s|##MACHINE##|$MACHINE|g"  "${OEROOT}"/conf/bblayers.conf > conf/bblayers.conf
 ln -sf "${OEROOT}"/conf/bblayers_${MACHINE}.conf conf/bblayers_${MACHINE}.conf
 
