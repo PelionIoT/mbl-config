@@ -67,12 +67,12 @@ mbl_eula_handle () {
     EULA_ACCEPT_ENV_VAR="$(echo "ACCEPT_EULA_${NON_MBL_MACHINE}" | sed 's/-//g')"
 
     case "$NON_MBL_MACHINE" in
-        # MBL OS also supports imx7s-warp and imx7d-pico from meta-freescale, but
+        # MBL OS also supports imx7s-warp from meta-freescale, but
         # we don't use recipes for those MACHINEs that require acceptance of a
         # EULA. If we start using recipes covered by a EULA without updating this
         # code then those recipes will fail to build due to the missing
         # ACCEPT_FSL_EULA variable.
-    imx8mmevk)
+    imx8mmevk|imx7d-pico)
         EULA_PATH="../layers/meta-fsl-bsp-release/imx/EULA.txt"
         EULA_ACCEPT_BB_VAR="ACCEPT_FSL_EULA"
         EULA_ACCEPT_BB_VALUE="1"
