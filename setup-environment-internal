@@ -183,8 +183,9 @@ if [ "$(whoami)" = "root" ]; then
     return
 fi
 
-
-DISTRO="mbl"
+if [ -z "$DISTRO" ]; then
+    DISTRO="mbl-development"
+fi
 
 # Avoid symlinks as it can cause modules (such as lvm2) to fail to build
 OEROOT=$(pwd -P)
@@ -339,9 +340,10 @@ bitbake_secondary_image () {
 mkdir -p "${BUILDDIR}"/conf && cd "${BUILDDIR}"
 if [ -f "conf/auto.conf" ]; then
     oldmach=$(egrep "^MACHINE" "conf/auto.conf" | sed -e 's%^MACHINE ?= %%' | sed -e 's/^"//'  -e 's/"$//')
+    olddistro=$(egrep "^DISTRO" "conf/auto.conf" | sed -e 's%^DISTRO ?= %%' | sed -e 's/^"//'  -e 's/"$//')
 fi
 
-if [ -e conf/checksum -a "${MACHINE}" = "$oldmach" ]
+if [ -e conf/checksum -a "${MACHINE}" = "$oldmach" -a "${DISTRO}" = "$olddistro" ]
 then
     # Even for the case we do not need to perform the setup for
     # the first build we still need to check if the EULA needs
@@ -377,8 +379,6 @@ ln -sf "${MANIFESTS}"/README.md README.md
 
 ln -sf "${MANIFESTS}" "${OEROOT}"/layers/
 
-DISTRO_DIRNAME=$(echo "${DISTRO}" | sed 's#[.-]#_#g')
-
 cat > conf/auto.conf <<EOF
 DISTRO ?= "${DISTRO}"
 MACHINE ?= "${MACHINE}"
@@ -388,6 +388,9 @@ SDKMACHINE ?= "${SDKMACHINE}"
 INHERIT += "rm_work"
 EOF
 
+# Because we are (re-)generating the build conf files, ensure we remove
+# the ACCEPT_EULA_${MACHINE} file to present the EULA to the user
+rm -rf ACCEPT_EULA_*
 mbl_eula_handle
 if [ $? -eq 1 ]
 then
@@ -407,7 +410,7 @@ DL_DIR ?= "${OEROOT}/downloads"
 # Where to save shared state
 SSTATE_DIR ?= "${OEROOT}/sstate-cache"
 
-TMPDIR = "${BUILDDIR}/tmp-${DISTRO_DIRNAME}"
+TMPDIR = "${BUILDDIR}/tmp"
 
 # Go through the Firewall
 #HTTP_PROXY        = "http://${PROXYHOST}:${PROXYPORT}/"
